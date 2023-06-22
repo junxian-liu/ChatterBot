@@ -1,6 +1,10 @@
 #Generate responses regarding stock
 from chatterbot.logic import LogicAdapter
 from polygon import RESTClient
+import random
+import json
+from typing import cast
+from urllib3 import HTTPResponse
 
 class MyLogicAdapter(LogicAdapter):
     def __init__(self, chatbot, **kwargs):
@@ -15,11 +19,6 @@ class MyLogicAdapter(LogicAdapter):
             return False
 
     def process(self, input_statement, additional_response_selection_parameters):
-        import random
-        import json
-        from typing import cast
-        from urllib3 import HTTPResponse
-
         # Randomly select a confidence between 0 and 1
         confidence = random.uniform(0, 1)
 
@@ -30,6 +29,7 @@ class MyLogicAdapter(LogicAdapter):
             HTTPResponse, 
             client.get_aggs(
                 'APPL', 
+                1,
                 'day', 
                 '2022-05-20', 
                 '2022-11-11', 
@@ -41,6 +41,7 @@ class MyLogicAdapter(LogicAdapter):
 
         # Getting closing prices of stock
         for item in data:
+            print('HI')
             if item == 'results':
                 rawData = data[item]
 

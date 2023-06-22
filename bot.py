@@ -24,9 +24,6 @@ chatbot = ChatBot(
 
 #TRAINING
 trainer = ListTrainer(chatbot)
-#Personal training
-# cleaned_corpus = clean_corpus(CHAT)
-# trainer.train(cleaned_corpus)
 
 trainer.train([
     "Hi",
