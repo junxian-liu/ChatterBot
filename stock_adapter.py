@@ -13,35 +13,41 @@ class MyLogicAdapter(LogicAdapter):
     def can_process(self, statement):
         s = 'stock'
         d = '$'
-        if statement.text.startswith(d): 
+        if d in statement.text: 
             return True
         else:
             return False
 
     def process(self, input_statement, additional_response_selection_parameters):
+        from chatterbot.conversation import Statement
         # Randomly select a confidence between 0 and 1
         confidence = random.uniform(0, 1)
 
+        # Get ticker from input
+        input = input_statement.text.split()
+        for word in input:
+            if word.startswith('$'):
+                ticker = word
+                print(ticker)
+                break
+        ticker = ticker[1:]
         # Make call to Polygon API
         API_KEY = 'Ao9fHerRTi5M9GteFUozhRdOasDXUXfN'
         client = RESTClient(API_KEY)
         aggs = cast(
-            HTTPResponse, 
+            HTTPResponse,
             client.get_aggs(
-                'APPL', 
+                ticker, 
                 1,
                 'day', 
                 '2022-05-20', 
                 '2022-11-11', 
                 raw = True
             )
-        )
-
+        ) 
         data = json.loads(aggs.data)
-
         # Getting closing prices of stock
         for item in data:
-            print('HI')
             if item == 'results':
                 rawData = data[item]
 
@@ -64,8 +70,6 @@ class MyLogicAdapter(LogicAdapter):
         
         mean = sumOfClosingPrice / lengthOfClosingPrice
         # For this example, we will just return the input as output
-        input_statement = "For the ticker $APPL, the mean price was {mean}, the max price was {max}, and the min price was {min}"
-        selected_statement = input_statement.format(mean = mean, max = max, min = min)
+        selected_statement = Statement(text='For the ticker ${}, the mean price was {}, the max price was {}, and the min price was {}'.format(ticker, mean, max, min))
         selected_statement.confidence = confidence
-
         return selected_statement
