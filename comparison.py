@@ -18,8 +18,8 @@ def stats(ticker):
             ticker, 
             1,
             'day', 
-            '2022-05-20', 
-            '2022-11-11', 
+            '2020-01-01', 
+            '2022-12-31', 
             raw = True
         )
     ) 
@@ -55,7 +55,6 @@ def stats(ticker):
 def addTick(newTick):
     global tickers
     tickers = np.append(tickers, newTick)
-    print(tickers)
 
 # Obtain the array of tickers
 def getTick():
@@ -69,6 +68,7 @@ def comparisons(newTick, oldTick):
     growthNew = (newTick[1] - newTick[2]) / newTick[2]
     growth = growthNew - growthOld
 
+    growth = round(growth, 2) * 100
     return growth
 
 # Return statement
