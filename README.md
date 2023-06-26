@@ -1,0 +1,1 @@
+Basic chat bot that incorporates information on current stock data through the usage of Polygon API. Users can enter any stock ticker they want basic information on in addition to comparing two different stocks together. Overall, it's a simple chat bot with a small utilization of Polygon API.
