@@ -10,7 +10,7 @@ tickers = np.array([])
 
 # Mean, max and min
 def stats(ticker):
-    API_KEY = 'Ao9fHerRTi5M9GteFUozhRdOasDXUXfN'
+    API_KEY = ''
     client = RESTClient(API_KEY)
     aggs = cast(
         HTTPResponse,
